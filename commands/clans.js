@@ -46,27 +46,27 @@ module.exports = {
 
             const prevBatchButton = new ButtonBuilder()
                 .setCustomId('clans_prev_batch')
-                .setLabel('<<<')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(page == 1);
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(page == 1)
+                .setEmoji('⏮');
 
             const prevButton = new ButtonBuilder()
                 .setCustomId('clans_prev')
-                .setLabel('<')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(page == 1);
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(page == 1)
+                .setEmoji('◀');
 
             const nextButton = new ButtonBuilder()
                 .setCustomId('clans_next')
-                .setLabel('>')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(page == total_pages);
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(page == total_pages)
+                .setEmoji('▶');
 
             const nextBatchButton = new ButtonBuilder()
                 .setCustomId('clans_next_batch')
-                .setLabel('>>>')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(page == total_pages);
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(page == total_pages)
+                .setEmoji('⏭');
 
             let row = new ActionRowBuilder()
                 .addComponents(prevBatchButton, prevButton, nextButton, nextBatchButton);
@@ -77,13 +77,13 @@ module.exports = {
 
             collector.on('collect', async i => {
                 if (i.customId === 'clans_prev_batch') {
-                    page -= 10;
+                    page = 1;
                 } else if (i.customId === 'clans_prev') {
                     page -= 1;
                 } else if (i.customId === 'clans_next') {
                     page += 1;
                 } else if (i.customId === 'clans_next_batch') {
-                    page += 10;
+                    page = total_pages;
                 }
 
                 page = Math.max(1, Math.min(page, total_pages));
