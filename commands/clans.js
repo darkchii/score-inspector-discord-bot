@@ -110,12 +110,9 @@ module.exports = {
                 await i.update({ embeds: [newEmbed], components: [row] });
             });
 
-            collector.on('end', async collected => {
-                if (collected.size == 0) {
-                    //completely remove the buttons
-                    row = new ActionRowBuilder().addComponents();
-                    await res.editReply({ embeds: [embed], components: [row] });
-                }
+            //remove buttons when collector ends
+            collector.on('end', () => {
+                res.edit({ components: [] });
             });
         } catch (err) {
             console.error(err);

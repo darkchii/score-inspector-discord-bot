@@ -53,6 +53,10 @@ const CLAN_STATS = [
         value: 'playtime',
         //format playtime in hours
         format: (value) => `**${(Math.floor(value / 3600)).toLocaleString('en-US')}** hours`
+    }, {
+        name: 'Members',
+        value: 'members',
+        format: (value) => `**${value}** members`
     }
 ]
 

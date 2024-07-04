@@ -10,7 +10,8 @@ module.exports = async (client, commands) => {
         logger.info(`Registering ${commands.length} command${commands.length > 1 ? "s" : ""} to the discord api ...`)
 
         const data = await rest.put(
-            Routes.applicationCommands(client.user.id),
+            // Routes.applicationCommands(client.user.id),
+            Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
             { body: commands },
         );
 
