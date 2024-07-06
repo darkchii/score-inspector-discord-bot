@@ -11,7 +11,9 @@ module.exports = async (client, commands) => {
 
         const data = await rest.put(
             // Routes.applicationCommands(client.user.id),
-            Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
+            //if process.env.ENVIROMENT is not production, register commands to the test guild
+            // Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
+            process.env.ENVIROMENT === 'production' ? Routes.applicationCommands(client.user.id) : Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
             { body: commands },
         );
 
