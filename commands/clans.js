@@ -76,6 +76,9 @@ module.exports = {
             const collector = res.createMessageComponentCollector({ time: 60_000 });
 
             collector.on('collect', async i => {
+                //only allow the user who initiated the command to interact with the buttons
+                if (i.user.id !== interaction.user.id) return i.reply({ content: 'You are not allowed to interact with this button!', ephemeral: true });
+
                 if (i.customId === 'clans_prev_batch') {
                     page = 1;
                 } else if (i.customId === 'clans_prev') {
