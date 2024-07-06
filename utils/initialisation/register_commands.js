@@ -13,7 +13,7 @@ module.exports = async (client, commands) => {
             // Routes.applicationCommands(client.user.id),
             //if process.env.ENVIROMENT is not production, register commands to the test guild
             // Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
-            process.env.ENVIROMENT === 'production' ? Routes.applicationCommands(client.user.id) : Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
+            process.env.NODE_ENV === 'production' ? Routes.applicationCommands(client.user.id) : Routes.applicationGuildCommands(client.user.id, process.env.DISCORD_GUILD),
             { body: commands },
         );
 
