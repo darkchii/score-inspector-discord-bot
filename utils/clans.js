@@ -4,6 +4,8 @@ const { EmbedBuilder } = require('discord.js');
 const validateColor = require("validate-color").default;
 const EMBED_CLAN_LIMIT = 5;
 
+const FOOTER_BASE = 'Bot by Amayakase';
+
 const CLAN_STATS = [
     {
         name: 'Performance',
@@ -91,7 +93,7 @@ function buildClanListEmbed(data) {
             .setTitle('Clans')
             .setThumbnail(thumb)
             .setDescription(`Showing clans sorted by ${CLAN_STATS.find(stat => stat.value === data.sort).name}`)
-            .setFooter({ text: `Page ${data.page}/${data.total_pages}` })
+            .setFooter({ text: `${FOOTER_BASE} - Page ${data.page}/${data.total_pages}` })
             .setTimestamp();
 
         data.clans.forEach(clan => {
@@ -125,6 +127,7 @@ function buildClanEmbed(data) {
             .setTitle(`[${data.clan.tag}] ${data.clan.name}`)
             .setDescription(data.clan.description)
             .setTimestamp()
+            .setFooter({ text: `${FOOTER_BASE}` })
             .setColor(color);
 
         if(data.clan.header_image_url) {

@@ -4,7 +4,8 @@ const logger = new log("Command register")
 
 module.exports = async (client, commands) => {
     if (!commands || commands.length == 0) return logger.info("No commands to register")
-    const rest = new REST().setToken(process.env.DISCORD_TOKEN);
+    // const rest = new REST().setToken(process.env.DISCORD_TOKEN);
+    const rest = new REST().setToken(process.env.NODE_ENV === 'production' ? process.env.DISCORD_TOKEN : process.env.DISCORD_TOKEN_DEV);
 
     try {
         logger.info(`Registering ${commands.length} command${commands.length > 1 ? "s" : ""} to the discord api ...`)
