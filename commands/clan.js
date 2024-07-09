@@ -7,25 +7,26 @@ module.exports = {
         .setName('clan')
         .setDescription('Show clan information')
         //either id or clan tag
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('id')
-                .setDescription('Find clan information by id')
-                .addIntegerOption(option =>
-                    option.setName('id')
-                        .setDescription('Clan id')
-                        .setRequired(true)
-                )
+        .addIntegerOption(option =>
+            option.setName('id')
+                .setDescription('The id of the clan')
+        )
+        .addStringOption(option =>
+            option.setName('tag')
+                .setDescription('The tag of the clan')
         ),
     async execute(client, interaction) {
         const id = interaction.options.getInteger('id');
+        const tag = interaction.options.getString('tag');
+        console.log(id, tag);
         try {
 
-            const data = await getClan(id);
+            const data = await getClan(id || tag, tag !== null);
 
-            if (!data || !data.clan) {
+            if (!data) {
                 return interaction.reply({ content: 'Clan not found!', ephemeral: true });
             }
+
             const embed = buildClanEmbed(data);
 
             if (!embed) {

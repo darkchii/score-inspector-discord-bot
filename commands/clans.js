@@ -35,7 +35,6 @@ module.exports = {
 
             if (clans.length == 0) return interaction.reply({ content: 'No clans found! The API may be down.', ephemeral: true });
 
-            //calc it from clans.total_clans and max per page
             const total_pages = Math.ceil(clans.total_clans / EMBED_CLAN_LIMIT);
             const embed = buildClanListEmbed({
                 clans: clans.clans,
