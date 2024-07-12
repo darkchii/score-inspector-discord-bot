@@ -58,6 +58,15 @@ const CLAN_STATS = [
         value: 'total_d',
         format: (value, with_title = true) => `**${value.toLocaleString('en-US')}** ${with_title ? 'D' : ''}`
     }, {
+        name: 'Medals',
+        value: 'medals',
+        format: (value, with_title = true) => `**${value.toLocaleString('en-US')}** ${with_title ? 'medals' : ''}`
+    }, {
+        name: 'Badges',
+        value: 'badges',
+        format: (value, with_title = true) => `**${value.toLocaleString('en-US')}** ${with_title ? 'badges' : ''}`
+    },
+    {
         name: 'Members',
         value: 'members',
         format: (value, with_title = true) => `**${value}** ${with_title ? 'members' : ''}`
@@ -241,5 +250,6 @@ module.exports = {
     buildClanListEmbed,
     buildClanEmbed,
     CLAN_STATS,
-    EMBED_CLAN_LIMIT
+    EMBED_CLAN_LIMIT,
+    FOOTER_BASE
 }
