@@ -1,7 +1,7 @@
 const { default: axios } = require('axios');
 const config = require('../config.json');
 const { EmbedBuilder } = require('discord.js');
-const { query } = require('./db');
+const { queryInspector } = require('./db');
 const validateColor = require("validate-color").default;
 const EMBED_CLAN_LIMIT = 5;
 
@@ -79,8 +79,8 @@ async function getClans(page, sort) {
             SELECT * FROM inspector_clans 
             INNER JOIN inspector_clan_stats ON inspector_clans.id = inspector_clan_stats.clan_id
             ORDER BY ? DESC LIMIT ? OFFSET ?`;
-        const response = await query(_query, [sort, EMBED_CLAN_LIMIT, (page - 1) * EMBED_CLAN_LIMIT]);
-        const total_clans = await query('SELECT COUNT(*) as count FROM inspector_clans');
+        const response = await queryInspector(_query, [sort, EMBED_CLAN_LIMIT, (page - 1) * EMBED_CLAN_LIMIT]);
+        const total_clans = await queryInspector('SELECT COUNT(*) as count FROM inspector_clans');
         return {
             clans: response,
             total_clans: Number(total_clans[0].count)
@@ -95,11 +95,11 @@ async function getClan(id, isTag = false) {
     try {
         //detect if the id is a tag or an id
         if (isTag) {
-            const response = await query('SELECT * FROM inspector_clans WHERE tag = ?', [id]);
+            const response = await queryInspector('SELECT * FROM inspector_clans WHERE tag = ?', [id]);
             if (response.length === 0) return null;
             id = response[0].id;
         }
-        const response = await query('SELECT * FROM inspector_clans WHERE id = ?', [id]);
+        const response = await queryInspector('SELECT * FROM inspector_clans WHERE id = ?', [id]);
         if (response.length === 0) return null;
 
         const members = await getClanMembers(id);
@@ -118,7 +118,7 @@ async function getClan(id, isTag = false) {
 
 async function getClanMembers(id) {
     try {
-        const response = await query(`
+        const response = await queryInspector(`
             SELECT inspector_users.*, inspector_clan_members.join_date FROM inspector_clan_members 
             JOIN inspector_users ON inspector_clan_members.osu_id = inspector_users.osu_id
             WHERE clan_id = ? AND pending = 0`, [id]);
@@ -131,7 +131,7 @@ async function getClanMembers(id) {
 
 async function getClanStats(id) {
     try {
-        const all_stats = await query('SELECT * FROM inspector_clan_stats');
+        const all_stats = await queryInspector('SELECT * FROM inspector_clan_stats');
         if (all_stats.length === 0) return null;
 
         const clan_stats = all_stats.find(stat => stat.clan_id === id);
@@ -232,8 +232,14 @@ function buildClanEmbed(data) {
             });
             fieldCount++;
         }
+
+        embed.addFields({
+            name: 'Link',
+            value: `[Inspector](${config.WEBSITE_URL}/clan/${data.id})`,
+            inline: true
+        })
         
-        if (fieldCount % 3 === 2) {
+        if (fieldCount % 3 === 2 || fieldCount % 3 === 1) {
             embed.addFields({ name: '\u200b', value: '\u200b', inline: true });
         }
 
