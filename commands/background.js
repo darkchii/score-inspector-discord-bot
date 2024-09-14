@@ -43,7 +43,10 @@ module.exports = {
                 .setImage(image_url)
                 .setColor(config.COLOR);
 
-            return interaction.reply({ embeds: [embed] });
+            // return interaction.reply({ embeds: [embed] });
+            //check if we are timed out (it can take a few seconds for the image to be fetched)
+            await interaction.deferReply();
+            return interaction.editReply({ embeds: [embed] });
 
             // //we want to send the image as a file, not url
             // const embed = new EmbedBuilder()
@@ -56,7 +59,7 @@ module.exports = {
             // return interaction.reply({ embeds: [embed] });
         } catch (err) {
             console.error(err);
-            return interaction.reply({ content: 'An error occured while fetching clan!', ephemeral: true });
+            return interaction.reply({ content: 'An error occured while fetching background!', ephemeral: true });
         }
     }
 }
