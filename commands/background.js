@@ -17,7 +17,7 @@ module.exports = {
         const beatmap_id = interaction.options.getInteger('beatmap_id');
         try {
 
-            const image_url = `https://bg.kirino.sh/get/${beatmap_id}`;
+            const image_url = `https://catboy.best/preview/background/${beatmap_id}`;
             const beatmap_data_url = `https://api.kirino.sh/inspector/beatmaps/${beatmap_id}`;
 
             //first, get the beatmap data
