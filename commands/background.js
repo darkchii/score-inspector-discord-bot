@@ -29,12 +29,6 @@ module.exports = {
                 delete beatmap_data.modded_sr;
             }
 
-            //check image_url response code
-            const image_response = await axios.get(image_url);
-            if(image_response.status !== 200){
-                return interaction.reply({ content: `An error occured while fetching background image!`, ephemeral: true });
-            }
-
             const embed = new EmbedBuilder()
                 .setTitle(`${beatmap_data.artist} - ${beatmap_data.title} [${beatmap_data.diffname}]`)
                 .setDescription(`Beatmap difficulty background image`)
